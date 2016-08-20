@@ -1,0 +1,10 @@
+export const SET_SURNAME = 'SET_SURNAME';
+export const SET_NAME = 'SET_NAME';
+export const SET_PATRON = 'SET_PATRON';
+export const SET_BIRTH = 'SET_BIRTH';
+export const SET_GENDER = 'SET_GENDER';
+export const SET_PASS = 'SET_PASS';
+export const SET_EMAIL = 'SET_EMAIL';
+export const SUBMIT_FORM_REQUEST = 'SUBMIT_FORM_REQUEST';
+export const SUBMIT_FORM_SUCCESS = 'SUBMIT_FORM_SUCCESS';
+export const SUBMIT_FORM_FAIL = 'SUBMIT_FORM_FAIL';
