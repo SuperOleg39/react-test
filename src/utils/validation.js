@@ -50,6 +50,7 @@ export function minLength(value, min) {
  * @param { Element } input
  * @param { string } mask
  * @param { string } separator
+ * @param { function } validateFunc
  */
 export function applyMask(input, mask, separator, validateFunc) {
     let str = input.value;

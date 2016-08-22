@@ -49,6 +49,51 @@ export function setEmail(email) {
     }
 }
 
+export function setCar(car) {
+    return {
+        type: types.SET_CAR,
+        payload: car
+    }
+}
+
+export function getBrands() {
+    return (dispatch) => {
+        dispatch({
+            type: types.BRANDS_REQUEST
+        });
+
+        fetch('./src/data/brands.json').then( response => {
+            return response.json();
+        }).then( brands => {
+            dispatch({
+                type: types.BRANDS_SUCCESS,
+                payload: brands
+            });
+        }).catch( reason => {
+            console.log(reason);
+        });
+    }
+}
+
+export function getModels(brand) {
+    return (dispatch) => {
+        dispatch({
+            type: types.MODELS_REQUEST
+        });
+
+        fetch('./src/data/models.json').then( response => {
+            return response.json();
+        }).then( models => {
+            dispatch({
+                type: types.MODELS_SUCCESS,
+                payload: models[brand]
+            });
+        }).catch( reason => {
+            console.log(reason);
+        });
+    }
+}
+
 export function submitForm() {
     return (dispatch) => {
         dispatch({

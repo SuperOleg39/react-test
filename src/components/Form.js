@@ -1,10 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import * as utils from '../utils/validation'
 
-const cyryllicRegexp = /^[А-ЯЁ][а-яё]*$/ig;
-const numberRegexp = /^[0-9.,-]+$/ig;
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/ig;
-
 export default class Form extends Component {
     onSurnameInputChange(e) {
         let val = e.target.value;
@@ -53,6 +49,15 @@ export default class Form extends Component {
         let val = e.target.value;
 
         this.props.actions.setEmail(e.target.value);
+    }
+    onCarInputChange(e) {
+        this.props.actions.setCar(e.target.checked);
+        this.props.actions.getBrands();
+    }
+    onBrandsInputChange(e) {
+        if (this.props.form.carBrands.indexOf(e.target.value)) {
+            this.props.actions.getModels(e.target.value);
+        }
     }
     onFormSubmit(e) {
         e.preventDefault();
@@ -159,6 +164,30 @@ export default class Form extends Component {
                     }
                 )()}
                 </div>
+            </div>
+            <div className='input-wrap'>
+                <div className='input-label'>Наличие авто</div>
+                <input name="car" type='checkbox' onChange={ ::this.onCarInputChange } checked={ form.car } />
+            </div>
+            <div className='input-wrap'>
+                <div className='input-label'>Производитель авто</div>
+                <select disabled={ !form.car } onChange={ ::this.onBrandsInputChange }>
+                    {
+                        this.props.form.carBrands.map(function(val){
+                            return <option key={val} value={val}>{val}</option>;
+                        })
+                    }
+                </select>
+            </div>
+            <div className='input-wrap'>
+                <div className='input-label'>Модель авто</div>
+                <select disabled={ !form.car }>
+                    {
+                        this.props.form.brandModels.map(function(val){
+                            return <option key={val} value={val}>{val}</option>;
+                        })
+                    }
+                </select>
             </div>
             <input type='submit' />
         </form>

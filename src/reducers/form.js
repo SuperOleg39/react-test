@@ -9,9 +9,14 @@ const initialState = {
     pass: '',
     email: '',
     car: false,
-    carBrands: [],
-    brandModels: [],
+    carBrands: [
+        'Выберите марку автомобиля'
+    ],
+    brandModels: [
+        'Выберите модель автомобиля'
+    ],
     fetching: false,
+    jsonFetching: false,
     errors: {}
 };
 
@@ -59,6 +64,54 @@ export default function form(state = initialState, action) {
                 email: action.payload
             }
             break;
+        case types.SET_CAR:
+            return {
+                ...state,
+                car: action.payload
+            }
+            break;
+        case types.BRANDS_REQUEST:
+            return {
+                ...state,
+                jsonFetching: 'process'
+            }
+            break;
+        case types.BRANDS_SUCCESS:
+            let brands = [];
+
+            brands.push('Выберите марку автомобиля');
+
+            for (let i = 0; i < Object.keys(action.payload).length; i++) {
+                brands.push(action.payload[i])
+            }
+
+            return {
+                ...state,
+                jsonFetching: 'success',
+                carBrands: brands
+            }
+            break;
+        case types.MODELS_REQUEST:
+            return {
+                ...state,
+                jsonFetching: 'process'
+            }
+            break;
+        case types.MODELS_SUCCESS:
+            let models = [];
+
+            models.push('Выберите модель автомобиля');
+
+            for (let i = 0; i < Object.keys(action.payload).length; i++) {
+                models.push(action.payload[i])
+            }
+
+            return {
+                ...state,
+                jsonFetching: 'success',
+                brandModels: models
+            }
+            break;
         case types.SUBMIT_FORM_REQUEST:
             return {
                 ...state,
@@ -78,15 +131,13 @@ export default function form(state = initialState, action) {
             }
             break;
         case types.ADD_ERROR:
-            let newErrors = {};
-
-            newErrors[`${action.fieldname}-${action.payload}`] = action.status;
+            let property = `${action.fieldname}-${action.payload}`;
 
             return {
                 ...state,
                 errors: {
                     ...state.errors,
-                    [`${action.fieldname}-${action.payload}`]: action.status
+                    [property]: action.status
                 }
             }
             break;
