@@ -62,3 +62,12 @@ export function submitForm() {
         }, 1000);
     }
 }
+
+export function addError(field, error, status) {
+    return {
+        type: types.ADD_ERROR,
+        payload: error,
+        fieldname: field,
+        status: status
+    }
+}

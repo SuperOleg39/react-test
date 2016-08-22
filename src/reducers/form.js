@@ -1,17 +1,18 @@
 import * as types from '../constants'
 
 const initialState = {
-    surname: 'Драпеза',
-    name: 'Олег',
-    patron: 'Николаевич',
-    birth: '12.07.1991',
+    surname: '',
+    name: '',
+    patron: '',
+    birth: '',
     gender: 'male',
-    pass: '11-22-333444',
-    email: 'surf4sites@yandex.ru',
-    car: 'false',
+    pass: '',
+    email: '',
+    car: false,
     carBrands: [],
     brandModels: [],
-    fetching: false
+    fetching: false,
+    errors: {}
 };
 
 export default function form(state = initialState, action) {
@@ -74,6 +75,19 @@ export default function form(state = initialState, action) {
             return {
                 ...state,
                 fetching: 'fail'
+            }
+            break;
+        case types.ADD_ERROR:
+            let newErrors = {};
+
+            newErrors[`${action.fieldname}-${action.payload}`] = action.status;
+
+            return {
+                ...state,
+                errors: {
+                    ...state.errors,
+                    [`${action.fieldname}-${action.payload}`]: action.status
+                }
             }
             break;
         default:
